@@ -5,6 +5,7 @@
 #   s3: current frame address
 #   s4: turn (0 - Player, 1 - ENEMY)
 #   s5: dificulty
+#	s6: starting player (0 - Player, 1 - ENEMY)
 
 .text
 # Initialization
@@ -12,6 +13,7 @@ INIT:
   jal INIT_VIDEO
 
   li s4, 0
+  mv s6, s4
 
 MENUS:
   # Dificulty menu 
@@ -48,8 +50,8 @@ CHOOSE_SYMBOL2:
   j GAME_LOOP
 
 GAME_LOOP:
-  jal CHECK_VICTORY_CONDITION
   jal RENDER_GAME
+  jal CHECK_VICTORY_CONDITION
   jal ENEMY_OUTPUT
   jal INPUT
   j GAME_LOOP
@@ -61,7 +63,9 @@ GAME_LOOP:
 .include "keyboard.s"
 .include "enemy.s"
 .include "menu.s"
+.include "ai.s"
 .include "game_logic.s"
+.include "endscreens.s"
 
 # Data includes
 .data
@@ -70,3 +74,6 @@ GAME_LOOP:
 .include "../data/malina1.data"
 .include "../data/menu1teste.data"
 .include "../data/menu2teste.data"
+.include "../data/telaVitoria.data"
+.include "../data/telaDerrota.data"
+.include "../data/telaEmpate.data"
